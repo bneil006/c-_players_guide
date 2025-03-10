@@ -4,43 +4,23 @@ namespace Classes
 {
     public class Triangle
     {
-        private float triangleBase;
-        private float triangleHeight;
+        private float _base;
+        private float _height;
 
-        // Properties
-        public float TriangleBase
+        public Triangle(float baseLength, float height)
         {
-            get { return triangleBase; } // read
-            set { triangleBase = value; } // set
+            _base = baseLength;
+            _height = height;
         }
 
-        public float TriangleHeight
+        public void PrintTriangleInfo() // Ensure this is public
         {
-            get { return triangleHeight; }
-            set
-            {
-                if (value > 5000)
-                {
-                    triangleHeight = 5000;
-                    Console.WriteLine("Height can not be greater than 5000, Height was set to 5000");
-                }
-                else
-                {
-                    triangleHeight = value;
-                }
-            } // we can use logic here for the setting
+            Console.WriteLine($"Base: {_base}, Height: {_height}");
         }
 
-        public Triangle(float triangleBase, float triangleHeight)
+        public float TriangleArea()
         {
-            TriangleBase = triangleBase;
-            TriangleHeight = triangleHeight;
-        }
-
-        public void PrintTriangleInfo()
-        {
-            Console.WriteLine($"Base: {triangleBase}, Height: {triangleHeight}");
+            return (_base * _height) / 2;
         }
     }
 }
-
