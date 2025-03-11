@@ -1,21 +1,50 @@
-﻿using System; // Top level statements including in C# 9
-using Classes; // created a folder for classes to use here, i called it Classes obviously, this is also the namespace in those .cs files so we can use the classes here.
+﻿using System;
 
-var firstTriangle = new Triangle(10, 9);
-var secondTriangle = new Triangle(2.5f, 5.5f);
-var thirdTriangle = new Triangle(5, 7);
-
-List<Triangle> farmersTriangles = new List<Triangle> { firstTriangle, secondTriangle, thirdTriangle };
-foreach (Triangle item in farmersTriangles)
+static string DuckBear() // challenge on Page 54 on C# Players Guide
 {
-    item.PrintTriangleInfo();
-    Console.WriteLine($"Area: {item.TriangleArea()}");
+    Console.Write("How many Chocolate Eggs recovered today?: ");
+    string answer = Console.ReadLine();
+    int chocEggsRecovered = int.Parse(answer);
+
+    int sisters = 4;
+    int split = chocEggsRecovered % sisters;
+    int sisterSplit = chocEggsRecovered / sisters;
+    return $"DuckBear receives: {split}, Each sister receives: {sisterSplit}";
 }
 
-Rectangle firstRectangle = new Rectangle(5, 10);
-firstRectangle.PrintRectangleInfo();
+static int DominionOfKings(int provinces, int duchies, int estates) // challenge on Page 55
+{
+    int total = 0;
+    total += estates;
+    total += duchies * 3;
+    total += provinces * 6;
 
+    return total;
+}
 
+static void DefenseOfConsolas() // challenge on Page 68
+{
+    Console.Write("Target Row: ");
+    string userRow = Console.ReadLine();
+    int row = int.Parse(userRow);
+
+    Console.Write("Target Column: ");
+    string userColumn = Console.ReadLine();
+    int column = int.Parse(userColumn);
+
+    Console.WriteLine("");
+    Console.WriteLine($"ATTACK INBOUND");
+    Console.WriteLine($"ROW: {row}, COLUMN: {column}");
+    Console.WriteLine("");
+    Console.WriteLine("DEFENSE DEPLOYED");
+
+    List<(int, int)> defenders = new List<(int, int)> { (row, column - 1), (row, column + 1), (row - 1, column), (row + 1, column) };
+    foreach ((int, int) item in defenders)
+    {
+        Console.WriteLine($"{(item.Item1, item.Item2)}");
+    }
+
+}
+
+DefenseOfConsolas();
 Console.ReadLine();
-
-

@@ -18,7 +18,7 @@ namespace Classes
             Console.WriteLine($"Base: {_base}, Height: {_height}");
         }
 
-        public float TriangleArea()
+        public float GetArea()
         {
             return (_base * _height) / 2;
         }
