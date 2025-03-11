@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Challenges // Challenges from C# Players Guide
 {
@@ -100,6 +99,7 @@ namespace Challenges // Challenges from C# Players Guide
 
             Console.WriteLine($"ENEMY COMING FROM THE: {direction}");
         }
+
 
 
     }
