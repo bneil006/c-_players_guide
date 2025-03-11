@@ -1,72 +1,32 @@
 ﻿using System;
-using Challenges;
 
-Console.Write("What day is it: ");
-string day = Console.ReadLine();
+int[] myIntArray = { 1, 2, 3 };
+float[] myFloatArray = { 1.0f, 2.0f, 3.0f };
+string[] myStringArray = { "apple", "banana", "cherry" };
 
-switch (day.ToUpper())
+/*
+ * using Generics, if we didn't use this we would have to make 3 methods / functions
+ * to loop over the items in the arrays, but by using Generics Method<T>(T[] parameter)
+ * we could name T to anything honestly, Bro Code uses Thing ex.,
+ * static void DisplayElements<Thing>(Thing[] arrayVariable)
+ * 
+ * This also changes our usage in the method such as in a foreach loop ex.,
+ * foreach (T variable in arrayVariable) --- Bro Code uses
+ * foreach (Thing variable in arrayVariable) for example.
+ * 
+ * T here stands for Type
+*/
+static void DisplayElements<T>(T[] array)
 {
-    case "MONDAY":
-    case "MON":
-        Console.WriteLine("Today is Monday");
-        break;
-    case "TUESDAY":
-    case "TUE":
-        Console.WriteLine("Today is Tuesday");
-        break;
-    case "WEDNESDAY":
-    case "WED":
-        Console.WriteLine("Today is Wednesday");
-        break;
-    case "THURSDAY":
-    case "THU":
-        Console.WriteLine("Today is Thursday");
-        break;
-    case "FRIDAY":
-    case "FRI":
-        Console.WriteLine("Today is Friday");
-        break;
-    case "SATURDAY":
-    case "SAT":
-        Console.WriteLine("Today is Saturday");
-        break;
-    case "SUNDAY":
-    case "SUN":
-        Console.WriteLine("Today is Sunday");
-        break;
-    default:
-        Console.WriteLine("Mmm, i'm not sure what day it is");
-        break;
-}
-
-string[] myArray = { "banana", "orange", "apple" };
-int count = 0;
-for (int i = 0; i < myArray.Length; i++)
-{
-    count += 1;
-    Console.WriteLine($"ITEM #{count}: {myArray[i]}");
-}
-
-Console.WriteLine(""); // splitting my loops on the console with some whitespace
-
-count = 0;
-foreach (string item in myArray)
-{
-    count += 1;
-    Console.WriteLine($"ITEM #{count}: {item}");
-}
-
-Console.WriteLine("");
-
-string[] newestArray = new string[200000];
-newestArray[0] = "Dog";
-newestArray[1] = "Cat";
-
-foreach (string item in newestArray)
-{
-    if (item != null) // we are only executing if the arrays index in the loop isn't empty
+    foreach (T item in array)
     {
         Console.WriteLine($"ITEM: {item}");
     }
+    Console.WriteLine(); // to add blank space between other functions
 }
+
+DisplayElements(myIntArray);
+DisplayElements(myFloatArray);
+DisplayElements(myStringArray);
+
 Console.ReadLine();
