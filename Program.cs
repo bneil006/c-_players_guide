@@ -1,15 +1,5 @@
 ﻿using System;
-using Classes;
+using Challenges;
 
-
-Animal animal = new Animal();
-Dog dog = new Dog();
-Bird bird = new Bird();
-Cat cat = new Cat();
-
-animal.Flee();
-dog.Flee();
-bird.Flee();
-cat.Flee();
-
+OldChallenges.DiscountedInventory();
 Console.ReadLine();
