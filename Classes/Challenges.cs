@@ -2,7 +2,7 @@
 
 namespace Challenges // Challenges from C# Players Guide
 {
-    public class OldChallenges
+    public static class OldChallenges
     {
 
         public static string DuckBear() // challenge on Page 54
@@ -37,10 +37,10 @@ namespace Challenges // Challenges from C# Players Guide
             string userColumn = Console.ReadLine();
             int column = int.Parse(userColumn);
 
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.WriteLine($"ATTACK INBOUND");
             Console.WriteLine($"ROW: {row}, COLUMN: {column}");
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.WriteLine("DEFENSE DEPLOYED");
 
             List<(int, int)> defenders = new List<(int, int)> { (row, column - 1), (row, column + 1), (row - 1, column), (row + 1, column) };
