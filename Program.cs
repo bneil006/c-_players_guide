@@ -1,5 +1,5 @@
 ﻿using System;
 using Challenges;
 
-OldChallenges.DiscountedInventory();
+OldChallenges.TheMagicCannon();
 Console.ReadLine();

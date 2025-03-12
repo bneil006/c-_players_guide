@@ -225,6 +225,62 @@ namespace Challenges // Challenges from C# Players Guide
             }
         }
 
+        public static void ThePrototype() // challenge on page 88
+        {
+            Console.Write("Pilot choose a number for the hunters to guess: ");
+            int pilotNumber = int.Parse(Console.ReadLine());
+
+            Console.Clear();
+
+            bool correctGuess = false;
+            while (!correctGuess) // while false
+            {
+                Console.Write("Hunter guess the pilots number: ");
+                int hunterGuess = int.Parse(Console.ReadLine());
+                if (hunterGuess < pilotNumber)
+                {
+                    Console.WriteLine($"{hunterGuess} is to low");
+                }
+                else if (hunterGuess > pilotNumber)
+                {
+                    Console.WriteLine($"{hunterGuess} is to high");
+                }
+                else
+                {
+                    Console.WriteLine("You guess the number!");
+                    correctGuess = true;
+                    break; // not super necassary since we would exit the while loop on the next iteration but is a little more efficient
+                }
+            }
+        }
+
+        public static void TheMagicCannon() // challenge on page 89
+        {
+            for (int i = 1; i <= 100; i++)
+            {
+                if (i % 3 == 0 && i % 5 == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    Console.WriteLine($"{i}: Fire & Electric");
+                }
+                else if (i % 3 == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"{i}: Fire");
+                }
+                else if (i % 5 == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine($"{i}: Electric");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.ResetColor();
+                    Console.WriteLine($"{i}: Normal");
+                }
+            }
+        }
 
     }
 }
