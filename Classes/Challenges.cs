@@ -159,10 +159,17 @@ namespace Challenges // Challenges from C# Players Guide
         {
             Console.Write("What is your name?: ");
             string name = Console.ReadLine();
+            name = name.ToUpper();
+
+            Dictionary<string, float> discountedMembers = new Dictionary<string, float>()
+            {
+                { "BRANDON", 0.5f }, // 50% discount
+                { "LUNA", 0.1f } // 90% discount
+            };
 
             Dictionary<string, int> inventory = new Dictionary<string, int>()
             {
-                { "Ropes", 10},
+                { "Ropes", 10 },
                 { "Torches", 15 },
                 { "Climbing Equipment", 25 },
                 { "Clean Water", 1 },
@@ -175,14 +182,46 @@ namespace Challenges // Challenges from C# Players Guide
             for (int i = 0; i < inventory.Count; i++)
             {
                 KeyValuePair<string, int> item = inventory.ElementAt(i); // quicker to use var here over writing out KeyValuePair<string, int> item / var item same thing
-                if (name.ToUpper() == "BRANDON")
+                if (discountedMembers.ContainsKey(name))
                 {
-                    Console.WriteLine($"{i + 1} - {item.Key}: {item.Value / 2} Gold");
+                    Console.WriteLine($"{i + 1} - {item.Key}: {(float)item.Value * discountedMembers[name]} Gold");
                 }
                 else
                 {
                     Console.WriteLine($"{i + 1} - {item.Key}: {item.Value} Gold");
                 }
+            }
+            Console.WriteLine("What would you like to purchase, Enter Number of item on the menu: ");
+            int answer = int.Parse(Console.ReadLine());
+            string choice;
+
+            choice = answer switch
+            {
+                1 => "Ropes",
+                2 => "Torches",
+                3 => "Climbing Equipment",
+                4 => "Clean Water",
+                5 => "Machete",
+                6 => "Canoe",
+                7 => "Food Supplies",
+                _ => String.Empty
+            };
+
+            if (inventory.ContainsKey(choice))
+            {
+                if (discountedMembers.ContainsKey(name))
+                {
+                    int cost = inventory[choice];
+                    Console.WriteLine($"{choice} will cost ya: {(float)cost * discountedMembers[name]} Gold");
+                }
+                else
+                {
+                    Console.WriteLine($"{choice} will cost ya: {inventory[choice]}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("That's not on the menu, run the program and try again.");
             }
         }
 
