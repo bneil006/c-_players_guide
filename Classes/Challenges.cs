@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 
 
 namespace Challenges // Challenges from C# Players Guide
@@ -281,6 +283,192 @@ namespace Challenges // Challenges from C# Players Guide
                 }
             }
         }
+
+        public static void ReplicatorOfDto() // challenge on page 94
+        {
+            int[] numberArray = new int[5];
+
+            int count = 0;
+            while (count < 5)
+            {
+                Console.Write($"Provide a number: ");
+                int response = int.Parse(Console.ReadLine());
+                numberArray[count] = response;
+                count++;
+            }
+
+            foreach (int number in numberArray)
+            {
+                Console.WriteLine($"{number}");
+            }
+        }
+
+        public static void LawsOfFreach() // challenge on page 95
+        {
+            int[] numberArray = new int[] { 4, 51, -7, 13, -99, 15, -8, 45, 90 };
+            int minNumber = int.MaxValue;
+            int total = 0;
+            foreach (int number in numberArray)
+            {
+                total += number;
+                if (number < minNumber)
+                {
+                    minNumber = number;
+                }
+            }
+            int average = total / numberArray.Length;
+            Console.WriteLine($"Min Number: {minNumber}, Average: {average}");
+        }
+
+        /// <summary>
+        /// C# Players Guide using Methods and XML Documenation, like this.
+        /// </summary>
+        public static int AskForNumber(string text) // challenge on page 106
+        {
+            Console.Write(text);
+            int userResponse = int.Parse(Console.ReadLine());
+            return userResponse;
+        }
+
+        public static int CountDown(int number) // challenge on page 107
+        {
+            if (number == 0) return number;
+            Console.WriteLine(number);
+            return CountDown(number - 1);
+        }
+
+        public static void HuntingTheManticore(Battler manticore, Battler city) // challenge on page 124
+        {
+            Console.Clear();
+
+            int cityStartingHealth = city.GetHealth();
+            int manticoreStartingHealth = manticore.GetHealth();
+
+            while (manticore.GetHealth() > 0 && city.GetHealth() > 0)
+            {
+                Console.WriteLine("-------------------------------------------------");
+                Status(city.GetAttack(), manticore, city);
+                city.FindTarget(manticore);
+            }
+
+            void Status(int round, Battler manticore, Battler city)
+            {
+                Console.WriteLine($"STATUS: Round: {city.GetAttack()} City: {city.GetHealth()}/{cityStartingHealth} Manticore: {manticore.GetHealth()}/{manticoreStartingHealth}");
+            }
+
+            if (manticore.GetHealth() <= 0)
+            {
+                Console.WriteLine($"The {manticore.GetName()} has been destoryed! The city of Consolas has been saved!");
+            }
+            else
+            {
+                Console.WriteLine($"The {city.GetName()} has been destoryed!");
+            }
+            
+
+        }
+
+
+    }
+
+    public class Battler // used for HuntingTheManticore() and challenge on page 124
+    {
+        private string _name;
+        private int _health;
+        private int _distance;
+        private int _attack = 1;
+
+        public Battler(string name, int health)
+        {
+            _name = name;
+            _health = health;
+            _distance = ChooseRange(1, 100);
+        }
+
+        public string GetName() => _name;
+        public int GetHealth() => _health;
+        public int GetDistance() => _distance;
+        public int GetAttack() => _attack;
+        public void Hurt(int damage) => _health -= damage;
+
+        public int ChooseRange(int start, int end)
+        {
+            while (true)
+            {
+                Console.Write($"{GetName()} choose a distance [{start} - {end}]: ");
+                _distance = int.Parse(Console.ReadLine());
+
+                if (_distance < start || _distance > end)
+                {
+                    Console.WriteLine($"Thats not within {start} - {end} range, choose again: ");
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return _distance;
+        }
+
+        public int FindTarget(Battler name)
+        {
+            _attack++;
+
+            Console.WriteLine("-------------------------------------------------");
+            void ExpectedDamage()
+            {
+                Console.WriteLine($"The cannon is expected to deal {DefenderCannonBallDamage()} this round.");
+            }
+
+            if (_distance == name.GetDistance())
+            {
+                ExpectedDamage();
+                Console.WriteLine($"That round was a DIRECT HIT!");
+                name.Hurt(DefenderCannonBallDamage());
+                Hurt(1);
+            }
+            else if (_distance < name.GetDistance())
+            {
+                ExpectedDamage();
+                Console.WriteLine($"That round FELL SHORT of {name.GetName()}");
+                ChooseRange(1, 100);
+                Hurt(1);
+            }
+            else
+            {
+                ExpectedDamage();
+                Console.WriteLine($"That round OVERSHOT {name.GetName()}");
+                ChooseRange(1, 100);
+                Hurt(1);
+            }
+
+            return _attack;
+        }
+
+        public int DefenderCannonBallDamage()
+        {
+            bool fireBall = _attack % 3 == 0;
+            bool electricBall = _attack % 3 == 0;
+            bool comboBall = fireBall && electricBall;
+
+            if (fireBall)
+            {
+                return 3;
+            }
+            else if (electricBall)
+            {
+                return 5;
+            }
+            else if (comboBall)
+            {
+                return 8;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
 
     }
 }

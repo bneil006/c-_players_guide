@@ -1,5 +1,10 @@
 ﻿using System;
 using Challenges;
 
-OldChallenges.TheMagicCannon();
+
+Battler manticore = new Battler("Manticore", 10);
+Battler city = new Battler("City", 15);
+
+OldChallenges.HuntingTheManticore(manticore, city);
+
 Console.ReadLine();
