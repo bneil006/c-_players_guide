@@ -6,7 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Challenges // Challenges from C# Players Guide
 {
-    public static class OldChallenges
+    public static class OC // Old Challenges
     {
 
         public static string DuckBear() // challenge on Page 54
@@ -337,6 +337,12 @@ namespace Challenges // Challenges from C# Players Guide
             return CountDown(number - 1);
         }
 
+        /// <summary>
+        /// Seperated into a different class OldChallenges, from the Battler so that I could keep track of this looking back
+        /// Probably not the most efficent thing to do, but it works.
+        /// </summary>
+        /// <param name="manticore"></param>
+        /// <param name="city"></param>
         public static void HuntingTheManticore(Battler manticore, Battler city) // challenge on page 124
         {
             Console.Clear();
@@ -367,8 +373,6 @@ namespace Challenges // Challenges from C# Players Guide
             
 
         }
-
-
     }
 
     public class Battler // used for HuntingTheManticore() and challenge on page 124
@@ -447,21 +451,21 @@ namespace Challenges // Challenges from C# Players Guide
 
         public int DefenderCannonBallDamage()
         {
-            bool fireBall = _attack % 3 == 0;
-            bool electricBall = _attack % 3 == 0;
-            bool comboBall = fireBall && electricBall;
 
-            if (fireBall)
+            bool electricBall = _attack % 5 == 0;
+            bool fireball = _attack % 3 == 0;
+
+            if (electricBall && fireball)
             {
-                return 3;
+                return 8;
             }
             else if (electricBall)
             {
                 return 5;
             }
-            else if (comboBall)
+            else if (fireball)
             {
-                return 8;
+                return 3;
             }
             else
             {

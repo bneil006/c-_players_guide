@@ -2,9 +2,9 @@
 using Challenges;
 
 
-Battler manticore = new Battler("Manticore", 10);
-Battler city = new Battler("City", 15);
+Battler manticore = new Battler("Manticore", 50);
+Battler city = new Battler("City", 25);
 
-OldChallenges.HuntingTheManticore(manticore, city);
+OC.HuntingTheManticore(manticore, city);
 
 Console.ReadLine();
