@@ -372,9 +372,12 @@ namespace Challenges // Challenges from C# Players Guide
             }
         }
 
-        public static void SimulasTest() // challenge on page 135
+        public static void SimulasChest() // challenge on page 135
         {
             ChestStates currentState = ChestStates.Locked;
+
+            Console.WriteLine("Exit program with Q or Quit");
+            Console.WriteLine("-------------------------------------------");
 
             string userResponse;
             while (true)
@@ -399,15 +402,23 @@ namespace Challenges // Challenges from C# Players Guide
                 {
                     currentState = ChestStates.Unlocked;
                 }
+                else if (userResponse == "QUIT" || userResponse == "Q")
+                {
+                    break;
+                }
 
             }
-
         }
+
+        public static (string, int, int) AddScore(string name, int score, int level)
+        {
+            return (name, score, level);
+        }
+        
 
     }
 
-
-    enum ChestStates // challenge on page 135 SimulaTest()
+    enum ChestStates // challenge on page 135 SimulaChest()
     {
         Open,
         Closed,
