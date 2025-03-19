@@ -3,6 +3,140 @@ using System.Collections.Generic;
 
 namespace PlayerHelpers
 {
+    public class Arrows // challenge on page 154
+    {
+        public string head;
+        public float shaftLength;
+        public string fletching;
+
+        private ArrowHeadType headType;
+        private FletchingType fletchingType;
+
+        public Arrows() : this("STEEL", 60, "PLASTIC")
+        {
+            AskUserToChoose();
+            Logic();
+        }
+
+        public Arrows(string head, float shaftLength, string fletching)
+        {
+            this.head = head;
+            this.shaftLength = shaftLength;
+            this.fletching = fletching;
+
+            Logic();
+        }
+
+        private void AskUserToChoose()
+        {
+            Console.WriteLine("ITEMS");
+            Console.WriteLine("---------------------");
+            Console.WriteLine($"ARROW HEAD TYPES: Steel (10 gold), Wood (3 gold), Obsidian (5 gold)");
+            Console.WriteLine($"FLETCHING TYPES: Plastic (10 gold), Turkey (5 gold), Goose (3 gold)");
+            Console.WriteLine($"SHAFT SIZES BETWEEN 60 - 100");
+            Console.WriteLine("---------------------");
+            Console.WriteLine();
+
+            Console.Write("CHOOSE ARROW HEAD: ");
+            head = Console.ReadLine();
+
+            Console.Write("CHOOSE FLETCHING: ");
+            fletching = Console.ReadLine();
+
+            Console.Write("CHOOSE LENGTH: ");
+            shaftLength = float.Parse(Console.ReadLine());
+        }
+
+        private void Logic()
+        {
+            head = head.ToUpper();
+            fletching = fletching.ToUpper();
+
+            if (shaftLength < 60.0f)
+            {
+                shaftLength = 60.0f;
+            }
+            else if (shaftLength > 100.0f)
+            {
+                shaftLength = 100.0f;
+            }
+
+            switch (head)
+            {
+                case "STEEL":
+                    headType = ArrowHeadType.Steel;
+                    break;
+                case "WOOD":
+                    headType = ArrowHeadType.Wood;
+                    break;
+                case "OBSIDIAN":
+                    headType = ArrowHeadType.Obsidian;
+                    break;
+                default:
+                    throw new Exception($"Didn't choose arrow head [Steel, Wood, Obsidian]");
+            }
+
+            fletchingType = fletching switch
+            {
+                "PLASTIC" => FletchingType.Plastic,
+                "TURKEY" => FletchingType.Turkey,
+                "GOOSE" => FletchingType.Goose,
+                _ => throw new Exception($"Didn't choose fletching [Plastic, Turkey, Goose]")
+            };
+        }
+
+        public float GetCost()
+        {
+            float headCost;
+            float fletchingCost;
+            float lengthCost;
+
+            headCost = headType.ToString() switch
+            {
+                "Steel" => 10.0f,
+                "Wood" => 3.0f,
+                "Obsidian" => 5.0f
+            };
+
+            fletchingCost = fletchingType.ToString() switch
+            {
+                "Plastic" => 10.0f,
+                "Turkey" => 5.0f,
+                "Goose" => 3.0f
+            };
+
+            lengthCost = 0.05f * shaftLength;
+            return headCost + fletchingCost + lengthCost;
+        }
+
+        public void GetHeadType()
+        {
+            Console.WriteLine($"HEAD CHOOSEN: {headType}");
+        }
+
+        public void GetFletchingType ()
+        {
+            Console.WriteLine($"FLETCHING CHOOSEN: {fletchingType}");
+        }
+
+        enum ArrowHeadType
+        {
+            Steel,
+            Wood,
+            Obsidian
+        }
+
+        enum FletchingType
+        {
+            Plastic,
+            Turkey,
+            Goose
+        }
+
+    }
+
+    
+
     public class Score
     {
         public string name;
@@ -14,11 +148,11 @@ namespace PlayerHelpers
             // no parameters to allow for Instance creations without any arguments
         }
 
-        public Score(string aName, int aPoints, int aLevel)
+        public Score(string name, int points, int level)
         {
-            this.name = aName;
-            this.points = aPoints;
-            this.level = aLevel;
+            this.name = name;
+            this.points = points;
+            this.level = level;
         }
 
         public bool EarnedStar() => (points / level) >= 1000;
