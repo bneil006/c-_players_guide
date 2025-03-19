@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography.X509Certificates;
+using PlayerHelpers;
 
 
 namespace Challenges // Challenges from C# Players Guide
@@ -340,6 +339,7 @@ namespace Challenges // Challenges from C# Players Guide
         /// <summary>
         /// Seperated into a different class OldChallenges, from the Battler so that I could keep track of this looking back
         /// Probably not the most efficent thing to do, but it works.
+        /// PlayerHelpers.cs has the Battler Class
         /// </summary>
         /// <param name="manticore"></param>
         /// <param name="city"></param>
@@ -410,12 +410,13 @@ namespace Challenges // Challenges from C# Players Guide
             }
         }
 
-        public static void FountainOfObjects() // challenge on page 143
+        public static void SimulaSoup() // challenge on page 143
         {
             SpiceType spiceSelection;
             IngredientType ingredientSelection;
             FoodType foodSelection;
 
+            Console.WriteLine("*** If you don't choose an item from the menu, we will choose for you ***");
             Console.WriteLine("MENU");
             Console.WriteLine("--------------------");
             Console.WriteLine($"SPICES: {SpiceType.Spicy}, {SpiceType.Salty}, {SpiceType.Sweet}");
@@ -454,7 +455,6 @@ namespace Challenges // Challenges from C# Players Guide
             string userChoice(string type)
             {
                 string userSelection;
-                Console.WriteLine("*** If you don't choose an item from the menu, we will choose for you ***");
                 Console.WriteLine("Choose a Spice, Ingredient, Food");
                 Console.Write($"{type}: ");
                 userSelection = Console.ReadLine().ToUpper();
@@ -465,136 +465,10 @@ namespace Challenges // Challenges from C# Players Guide
             Console.WriteLine($"{spiceSelection} {ingredientSelection} {foodSelection}");
         }
 
-
-    }
-    enum SpiceType
-    {
-        Spicy,
-        Salty,
-        Sweet
-    }
-    enum IngredientType
-    {
-        Mushroom,
-        Chicken,
-        Carrot,
-        Potatoe
-    }
-
-    enum FoodType
-    {
-        Soup,
-        Stew,
-        Gumbo
-    }
-
-
-    enum ChestStates // challenge on page 135 SimulaChest()
-    {
-        Open,
-        Closed,
-        Locked,
-        Unlocked
-    }
-
-    public class Battler // used for HuntingTheManticore() and challenge on page 124
-    {
-        private string _name;
-        private int _health;
-        private int _distance;
-        private int _attack = 1;
-
-        public Battler(string name, int health)
-        {
-            _name = name;
-            _health = health;
-            _distance = ChooseRange(1, 100);
-        }
-
-        public string GetName() => _name;
-        public int GetHealth() => _health;
-        public int GetDistance() => _distance;
-        public int GetAttack() => _attack;
-        public void Hurt(int damage) => _health -= damage;
-
-        public int ChooseRange(int start, int end)
-        {
-            while (true)
-            {
-                Console.Write($"{GetName()} choose a distance [{start} - {end}]: ");
-                _distance = int.Parse(Console.ReadLine());
-
-                if (_distance < start || _distance > end)
-                {
-                    Console.WriteLine($"Thats not within {start} - {end} range, choose again: ");
-                }
-                else
-                {
-                    break;
-                }
-            }
-            return _distance;
-        }
-
-        public int FindTarget(Battler name)
-        {
-            _attack++;
-
-            Console.WriteLine("-------------------------------------------------");
-            void ExpectedDamage()
-            {
-                Console.WriteLine($"The cannon is expected to deal {DefenderCannonBallDamage()} this round.");
-            }
-
-            if (_distance == name.GetDistance())
-            {
-                ExpectedDamage();
-                Console.WriteLine($"That round was a DIRECT HIT!");
-                name.Hurt(DefenderCannonBallDamage());
-                Hurt(1);
-            }
-            else if (_distance < name.GetDistance())
-            {
-                ExpectedDamage();
-                Console.WriteLine($"That round FELL SHORT of {name.GetName()}");
-                ChooseRange(1, 100);
-                Hurt(1);
-            }
-            else
-            {
-                ExpectedDamage();
-                Console.WriteLine($"That round OVERSHOT {name.GetName()}");
-                ChooseRange(1, 100);
-                Hurt(1);
-            }
-
-            return _attack;
-        }
-
-        public int DefenderCannonBallDamage()
+        public static void TestMethod()
         {
 
-            bool electricBall = _attack % 5 == 0;
-            bool fireball = _attack % 3 == 0;
-
-            if (electricBall && fireball)
-            {
-                return 8;
-            }
-            else if (electricBall)
-            {
-                return 5;
-            }
-            else if (fireball)
-            {
-                return 3;
-            }
-            else
-            {
-                return 1;
-            }
         }
-    }
 
-    
+    }
 }
