@@ -1,11 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
 
 namespace PlayerHelpers
 {
-    public class Arrows // challenge on page 154, 164 and 168.
+    
+    public class Arrows // challenge on page 154, 164, 168 and 173
     {
+        #region Chapter 21 Statics
+        public readonly static List<Arrows> soldArrow = new List<Arrows>();
+        public static Arrows CreateEliteArrow() => new Arrows("Steel", 95, "Plastic");
+        public static Arrows CreateBeginnerArrow() => new Arrows("Wood", 75, "Goose");
+        public static Arrows CreateMarksmanArrow() => new Arrows("Obsidian", 65, "Turkey");
+
+        public static void SoldArrowLedger()
+        {
+            for (int i = 0; i < soldArrow.Count; i++)
+            {
+                string head = soldArrow[i].Head;
+                string fletching = soldArrow[i].Fletching;
+                float shaftLength = soldArrow[i].ShaftLength;
+                float cost = soldArrow[i].Cost;
+
+                Console.WriteLine($"Head: {head}, Fletching: {fletching}, Length: {shaftLength}, Cost: {cost}");
+            }
+        }
+        #endregion
+
         private string head;
         private string fletching;
         private float shaftLength;
@@ -54,14 +74,13 @@ namespace PlayerHelpers
 
                 lengthCost = 0.05f * ShaftLength;
 
-                
                 return headCost + fletchingCost + lengthCost;
             }
         }
 
         public Arrows() : this("STEEL", 60, "PLASTIC")
         {
-
+            
         }
 
         public Arrows(string head, float shaftLength, string fletching)
@@ -69,6 +88,7 @@ namespace PlayerHelpers
             Head = head;
             Fletching = fletching;
             ShaftLength = shaftLength;
+            soldArrow.Add(this);
         }
     }
 
