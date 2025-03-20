@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace PlayerHelpers
 {
-    public class Arrows // challenge on page 154
+    public class Arrows // challenge on page 154 and page 162
     {
-        public string head;
-        public float shaftLength;
-        public string fletching;
+        private string head;
+        private float shaftLength;
+        private string fletching;
 
         private ArrowHeadType headType;
         private FletchingType fletchingType;
@@ -106,27 +106,51 @@ namespace PlayerHelpers
             };
 
             lengthCost = 0.05f * shaftLength;
+            
             return headCost + fletchingCost + lengthCost;
         }
 
         public void GetHeadType()
         {
-            Console.WriteLine($"HEAD CHOOSEN: {headType}");
+            Console.WriteLine($"HEAD: {headType}");
         }
 
         public void GetFletchingType ()
         {
-            Console.WriteLine($"FLETCHING CHOOSEN: {fletchingType}");
+            Console.WriteLine($"FLETCHING: {fletchingType}");
         }
 
-        enum ArrowHeadType
+        public void GetShaftLength()
+        {
+            Console.WriteLine($"SHAFT LENGTH: {shaftLength}");
+        }
+
+        public void SetHeadType(string value)
+        {
+            head = value;
+            Logic();
+        }
+
+        public void SetFletchingType(string value)
+        {
+            fletching = value;
+            Logic();
+        }
+
+        public void SetShaftLength(float value)
+        {
+            shaftLength = value;
+            Logic();
+        }
+
+        internal enum ArrowHeadType
         {
             Steel,
             Wood,
             Obsidian
         }
 
-        enum FletchingType
+        internal enum FletchingType
         {
             Plastic,
             Turkey,
@@ -157,6 +181,7 @@ namespace PlayerHelpers
 
         public bool EarnedStar() => (points / level) >= 1000;
     }
+
     enum SpiceType
     {
         Spicy,
