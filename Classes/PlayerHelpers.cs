@@ -3,11 +3,82 @@ using System.Collections.Generic;
 
 namespace PlayerHelpers
 {
-    
+    #region Color Class
+    public class Color // challenge on page 191
+    {
+        public static Color White() => new Color(255, 255, 255);
+        public static Color Black() => new Color(0, 0, 0);
+        public static Color Red() => new Color(255, 0, 0);
+        public static Color Orange() => new Color(255, 165, 0);
+        public static Color Yellow() => new Color(255, 255, 0);
+        public static Color Green() => new Color(0, 128, 0);
+        public static Color Blue() => new Color(0, 0, 255);
+        public static Color Purple() => new Color(128, 0, 128);
+
+        private int r;
+        private int g;
+        private int b;
+
+        public int R { get; set; }
+        public int G { get; set; }
+        public int B { get; set; }
+
+        public Color() : this(0, 0, 0)
+        {
+
+        }
+
+        public Color(int r, int g, int b)
+        {
+            R = r;
+            G = g;
+            B = b;
+        }
+
+        public void DisplayRGB()
+        {
+            Console.WriteLine($"Red: {R}, Green: {G}, Blue: {B}");
+        }
+    }
+    #endregion
+
+    #region Point Class
+    public class Point // challenge on page 191
+    {
+        private static List<Point> points = new List<Point>();
+        public static void ShowPoints()
+        {
+            for (int i = 0; i < points.Count; i++)
+            {
+                Console.WriteLine($"{(points[i].X, points[i].Y)}");
+            }
+        }
+
+        private int x;
+        private int y;
+
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        public Point() : this(0, 0)
+        {
+
+        }
+
+        public Point(int x, int y)
+        {
+            X = x;
+            Y = y;
+            points.Add(this);
+        }
+    }
+    #endregion
+
+    #region Arrows Class
     public class Arrows // challenge on page 154, 164, 168 and 173
     {
-        #region Chapter 21 Statics
-        public readonly static List<Arrows> soldArrow = new List<Arrows>();
+        #region Class Statics
+        private readonly static List<Arrows> soldArrow = new List<Arrows>();
         public static Arrows CreateEliteArrow() => new Arrows("Steel", 95, "Plastic");
         public static Arrows CreateBeginnerArrow() => new Arrows("Wood", 75, "Goose");
         public static Arrows CreateMarksmanArrow() => new Arrows("Obsidian", 65, "Turkey");
@@ -16,20 +87,18 @@ namespace PlayerHelpers
         {
             for (int i = 0; i < soldArrow.Count; i++)
             {
-                string head = soldArrow[i].Head;
-                string fletching = soldArrow[i].Fletching;
-                float shaftLength = soldArrow[i].ShaftLength;
-                float cost = soldArrow[i].Cost;
-
-                Console.WriteLine($"Head: {head}, Fletching: {fletching}, Length: {shaftLength}, Cost: {cost}");
+                Console.WriteLine($"Head: {soldArrow[i].Head}, Fletching: {soldArrow[i].Fletching}, Length: {soldArrow[i].ShaftLength}, Cost: {soldArrow[i].Cost}");
             }
         }
         #endregion
 
+        #region Instance Fields
         private string head;
         private string fletching;
         private float shaftLength;
+        #endregion
 
+        #region Properties
         public string Head // began working on properties for better getters and setters vs creating your own class methods
         {
             get { return head; }
@@ -77,7 +146,9 @@ namespace PlayerHelpers
                 return headCost + fletchingCost + lengthCost;
             }
         }
+        #endregion
 
+        #region Constructors
         public Arrows() : this("STEEL", 60, "PLASTIC")
         {
             
@@ -90,8 +161,11 @@ namespace PlayerHelpers
             ShaftLength = shaftLength;
             soldArrow.Add(this);
         }
+        #endregion
     }
+    #endregion
 
+    #region Score Class
     public class Score
     {
         public string name;
@@ -112,36 +186,9 @@ namespace PlayerHelpers
 
         public bool EarnedStar() => (points / level) >= 1000;
     }
+    #endregion
 
-    enum SpiceType
-    {
-        Spicy,
-        Salty,
-        Sweet
-    }
-    enum IngredientType
-    {
-        Mushroom,
-        Chicken,
-        Carrot,
-        Potatoe
-    }
-
-    enum FoodType
-    {
-        Soup,
-        Stew,
-        Gumbo
-    }
-
-    enum ChestStates // challenge on page 135 SimulaChest()
-    {
-        Open,
-        Closed,
-        Locked,
-        Unlocked
-    }
-
+    #region Battler Class
     public class Battler // used for HuntingTheManticore() and challenge on page 124
     {
         private string _name;
@@ -253,4 +300,36 @@ namespace PlayerHelpers
             }
         }
     }
+    #endregion
+
+    #region General Enums
+    enum SpiceType
+    {
+        Spicy,
+        Salty,
+        Sweet
+    }
+    enum IngredientType
+    {
+        Mushroom,
+        Chicken,
+        Carrot,
+        Potatoe
+    }
+
+    enum FoodType
+    {
+        Soup,
+        Stew,
+        Gumbo
+    }
+
+    enum ChestStates // challenge on page 135 SimulaChest()
+    {
+        Open,
+        Closed,
+        Locked,
+        Unlocked
+    }
+    #endregion
 }
