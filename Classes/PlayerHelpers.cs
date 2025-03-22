@@ -3,6 +3,133 @@ using System.Collections.Generic;
 
 namespace PlayerHelpers
 {
+    #region Packing Inventory Challenge
+    public class Pack
+    {
+        #region Base Class Properties
+        public int BagItemCapacity { get; protected set; }
+        public float BagWeightCapacity { get; protected set; }
+        public float BagVolumeCapacity { get; protected set; }
+
+        #endregion
+        public Pack(int itemCapacity, int weightCapacity, int volumeCapacity)
+        {
+            BagItemCapacity = itemCapacity;
+            BagWeightCapacity = weightCapacity;
+            BagVolumeCapacity = volumeCapacity;
+        }
+
+        public bool PackItem(InventoryItem item)
+        {
+            if (item.ItemWeight > BagWeightCapacity)
+            {
+                Console.WriteLine($"Overweight, {item} can not be added.");
+                return false;
+            }
+            else if (item.ItemVolume > BagVolumeCapacity)
+            {
+                Console.WriteLine($"Overvolume, {item} can not be added.");
+                return false;
+            }
+            else if (BagItemCapacity <= 0)
+            {
+                Console.WriteLine($"Over Item Capacity, {item} can not be added.");
+                return false;
+            }
+            else
+            {
+                BagItemCapacity -= 1;
+                BagWeightCapacity -= item.ItemWeight;
+                BagVolumeCapacity -= item.ItemVolume;
+                PackStatus();
+                return true;
+            }
+        }
+
+        public void PackItems(params InventoryItem[] items)
+        {
+            foreach (InventoryItem item in items)
+            {
+                PackItem(item);
+            }
+        }
+
+        public Pack CreateNewPack() // not finished implementing but i get the jist of the challenge on 205 so i probably wont finish this class in full.
+        {
+            return new Pack(10, 8, 4);
+        }
+
+        public void PackStatus()
+        {
+            Console.WriteLine($"PACK STATUS | Item Capacity Left: {BagItemCapacity}, Weight Capacity Left: {BagWeightCapacity}, Volume Capacity Left: {BagVolumeCapacity}");
+        }
+    }
+
+    public class InventoryItem
+    {
+        public float ItemWeight { get; set; }
+        public float ItemVolume { get; set; }
+        public InventoryItem()
+        {
+
+        }
+    }
+
+    public class ArrowItem : InventoryItem
+    {
+        public ArrowItem()
+        {
+            ItemWeight = 0.1f;
+            ItemVolume = 0.05f;
+        }
+    }
+
+    public class BowItem : InventoryItem
+    {
+        public BowItem()
+        {
+            ItemWeight = 1.0f;
+            ItemVolume = 4.0f;
+        }
+    }
+
+    public class RopeItem : InventoryItem
+    {
+        public RopeItem()
+        {
+            ItemWeight = 1.0f;
+            ItemVolume = 1.5f;
+        }
+    }
+
+    public class WaterItem : InventoryItem
+    {
+        public WaterItem()
+        {
+            ItemWeight = 2.0f;
+            ItemVolume = 3.0f;
+        }
+    }
+
+    public class FoodRationItem : InventoryItem
+    {
+        FoodRationItem()
+        {
+            ItemWeight = 1.0f;
+            ItemVolume = 0.5f;
+        }
+    }
+
+    public class SwordItem : InventoryItem
+    {
+        public SwordItem()
+        {
+            ItemWeight = 5.0f;
+            ItemVolume = 3.0f;
+        }
+    }
+    #endregion
+
     #region TicTacToe Class
     public class TicTacToe
     {
@@ -20,7 +147,6 @@ namespace PlayerHelpers
             { 9, " " }
         };
 
-        private string letter;
         public string Letter { get; set; }
 
         public TicTacToe(string letter)
@@ -28,16 +154,7 @@ namespace PlayerHelpers
             Letter = letter;
         }
 
-        public static void ShowBoardNumberTemplate ()
-        {
-            Console.WriteLine(" 7 | 8 | 9 ");
-            Console.WriteLine("---+---+---");
-            Console.WriteLine(" 4 | 5 | 6 ");
-            Console.WriteLine("---+---+---");
-            Console.WriteLine(" 1 | 2 | 3 ");
-        }
-
-        public static void ShowGameBoard()
+        private static void ShowGameBoard()
         {
             Console.WriteLine($" {gameBoard[7]} | {gameBoard[8]} | {gameBoard[9]}     7 | 8 | 9 ");
             Console.WriteLine($"---+---+---   ---+---+---");
@@ -76,13 +193,12 @@ namespace PlayerHelpers
             ShowGameBoard();
             Console.WriteLine();
 
-            while (gameOver == false)
+            while (true)
             {
 
                 int number;
 
                 gameOver = CheckForWin(playerTwo);
-                Console.WriteLine($"WIN CHECK: {gameOver}");
                 if (gameOver == false)
                 {
                     Console.Write($"Player One: ");
@@ -90,15 +206,22 @@ namespace PlayerHelpers
                     UpdateBoard(playerOne, number);
                     ShowGameBoard();
                 }
+                else
+                {
+                    break;
+                }
 
                 gameOver = CheckForWin(playerOne);
-                Console.WriteLine($"WIN CHECK: {gameOver}");
                 if (gameOver == false)
                 {
                     Console.Write($"Player Two: ");
                     number = int.Parse(Console.ReadLine());
                     UpdateBoard(playerTwo, number);
                     ShowGameBoard();
+                }
+                else
+                {
+                    break;
                 }
             }
         }
@@ -130,6 +253,11 @@ namespace PlayerHelpers
                 return true;
             }
             return false;
+        }
+
+        public override string ToString()
+        {
+            return $"This is my ToString Override, Player Letter: {Letter}";
         }
 
 
@@ -795,4 +923,4 @@ namespace PlayerHelpers
         Unlocked
     }
     #endregion
-}
+} 
