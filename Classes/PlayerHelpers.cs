@@ -3,36 +3,227 @@ using System.Collections.Generic;
 
 namespace PlayerHelpers
 {
-    #region LockedDoor Class
-    public class LockedDoor
+    #region RockPaperScissors Class
+    public class RockPaperScissors ()
     {
-        private int passcode;
-        public int Passcode
+
+    }
+    #endregion
+
+    #region PasswordValidator Class
+    public class PasswordValidator
+    {
+        private string password;
+        public string Password
         {
-            get { return passcode; }
+            get { return password; }
             set
             {
-                if (value == passcode)
+                bool noCapitalLetterT = true; // requirement of Ingelmar in IT on page 192 of C# Players Guide to not contain a Capital T
+                bool noAmperstand = true; // requirment of Ingelmar in IT on page 192 of C# Players Guide to not contain a &
+
+                bool lengthRequirements = false;
+                bool oneUppercaseLetter = false;
+                bool oneLowercaseLetter = false;
+                bool hasSpecialCharacter = false;
+                bool hasDigit = false;
+
+                List<char> specialCharacters = new List<char>() { '!', '@', '#', '$', '%', '^', '*' };
+
+                if (value.Count<char>() < 6)
                 {
-                    passcode = value;
+                    Console.WriteLine("Password to short. Min 6 characters, Max 13 characters");
                 }
+                else if (value.Count<char>() > 13)
+                {
+                    Console.WriteLine("Password to long. Min 6 characters, Max 13 characters");
+                }
+                else
+                {
+                    lengthRequirements = true;
+                }
+
+                foreach (char c in value)
+                {
+                    if (c == 'T')
+                    {
+                        Console.WriteLine("\"T\" is not allowed in the password.");
+                        noCapitalLetterT = false;
+                    }
+                    else if (c == '&')
+                    {
+                        Console.WriteLine("\"&\" is not allowed in the password.");
+                        noAmperstand = false;
+                    }
+                    else if (char.IsUpper(c))
+                    {
+                        oneUppercaseLetter = true;
+                    }
+                    else if (char.IsLower(c))
+                    {
+                        oneLowercaseLetter = true;
+                    }
+                    else if (char.IsDigit(c))
+                    {
+                        hasDigit = true;
+                    }
+                }
+
+                foreach(char c in value)
+                {
+                    if (specialCharacters.Contains(c))
+                    {
+                        hasSpecialCharacter = true;
+                    }
+                }
+
+                if (!oneUppercaseLetter)
+                {
+                    Console.WriteLine("Atleast One Uppercase Letter required in password.");
+                }
+                else if (!oneLowercaseLetter)
+                {
+                    Console.WriteLine("Atleast One Lowercase Letter required in password.");
+                }
+                else if (!hasDigit)
+                {
+                    Console.WriteLine("Atleast One Digit required in password.");
+                }
+                else if (!hasSpecialCharacter)
+                {
+                    Console.WriteLine("Atleast One Special required in password.");
+                }
+
+                if (
+                    noCapitalLetterT == true
+                    && noAmperstand == true
+                    && lengthRequirements == true
+                    && oneUppercaseLetter == true
+                    && oneLowercaseLetter == true
+                    && hasSpecialCharacter == true
+                    && hasDigit == true)
+                {
+                    password = value;
+                }
+
             }
         }
-        /*
-         * An open door can always be closed.
-         * A closed (but not locked) door can always be opened.
-         * A closed door can always be locked.
-         * A locked door can be unlocked, but a numeric passcode is needed and the door will only unlock
-         * if the code supplied matches the doors current passcode.
-         * When a door is created, it must be given an initial passcode.
-         * Additionally, you should be able to change the passcode by supplying the current code and a new one.
-         * The passcode should only change if the correct, current code is given.
-        */
-
-
-        public LockedDoor(int passcode)
+        public PasswordValidator(string password)
         {
-            Passcode = passcode;
+            Password = password;
+        }
+    }
+    #endregion
+
+    #region Door Class
+    public class Door
+    {
+        private int passcode;
+        private string doorState = "LOCKED";
+
+        public Door(int intPasscode)
+        {
+            this.passcode = intPasscode;
+        }
+
+        public void InteractWithDoor()
+        {
+            Console.WriteLine("AVALIABLE ACTIONS:");
+            Console.WriteLine("OPEN, CLOSE, LOCK, UNLOCK, CHANGE PASSWORD, STOP");
+            Console.WriteLine();
+
+            AskUserForAction();
+        }
+
+        private void AskUserForAction()
+        {
+            while (true)
+            {
+
+                Console.WriteLine($"The door is {doorState}");
+                Console.WriteLine($"What would you like to do: ");
+                string userResponse = Console.ReadLine().ToUpper();
+                Console.WriteLine();
+
+                if (userResponse == "UNLOCK" && (doorState == "LOCKED"))
+                {
+                    UnlockDoor();
+                }
+                else if (userResponse == "OPEN" && (doorState == "UNLOCKED" || userResponse == "OPEN" && doorState == "CLOSED"))
+                {
+                    OpenDoor();
+                }
+                else if (userResponse == "CLOSE" && doorState == "OPEN")
+                {
+                    CloseDoor();
+                }
+                else if (userResponse == "LOCK" && (doorState == "CLOSED" || userResponse == "LOCK" && doorState == "UNLOCKED"))
+                {
+                    LockDoor();
+                }
+                else if (userResponse == "CHANGE PASSWORD" || userResponse == "PASSWORD")
+                {
+                    Console.Write("Provide the current password: ");
+                    int userPasswordResponse = int.Parse(Console.ReadLine());
+                    ChangePasscode(userPasswordResponse, passcode);
+                }
+
+            }
+        }
+
+        private void UnlockDoor()
+        {
+            Console.Write($"Please provide the pin to unlock the door: ");
+            int userProvidedPasscode = int.Parse(Console.ReadLine());
+            if (passcode == userProvidedPasscode)
+            {
+                doorState = "UNLOCKED";
+                AskUserForAction();
+            }
+            else
+            {
+                Console.WriteLine("Wrong passcode provided.");
+                Console.WriteLine();
+                AskUserForAction();
+            }
+        }
+
+        private void OpenDoor()
+        {
+            doorState = "OPEN";
+            AskUserForAction();
+        }
+
+        private void CloseDoor()
+        {
+            doorState = "CLOSED";
+            AskUserForAction();
+        }
+
+        private void LockDoor()
+        {
+            doorState = "LOCKED";
+            AskUserForAction();
+        }
+
+        private void ChangePasscode(int newPasscode, int oldPasscode)
+        {
+            if (oldPasscode == newPasscode)
+            {
+                Console.Write("New Passcode PIN #: ");
+                int response = int.Parse(Console.ReadLine());
+
+                Console.WriteLine($"Passcode changed.");
+                Console.WriteLine();
+
+                passcode = response;
+                AskUserForAction();
+            }
+            else
+            {
+                Console.WriteLine($"Passcode not changed, wrong current passcode.");
+                Console.WriteLine();
+            }
         }
     }
     #endregion

@@ -2,8 +2,7 @@
 using Challenges;
 using PlayerHelpers;
 
-
-Card card = new Card("Blue King");
-Console.WriteLine($"Players selected card: {card.CardSelection}. FACE CARD? {card.FaceCard}");
+PasswordValidator a = new PasswordValidator("Aa6@er");
+Console.WriteLine(a.Password);
 
 Console.ReadLine();
