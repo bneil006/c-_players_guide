@@ -2,7 +2,9 @@
 using Challenges;
 using PlayerHelpers;
 
-PasswordValidator a = new PasswordValidator("Aa6@er");
-Console.WriteLine(a.Password);
+TicTacToe playerOne = new TicTacToe("X");
+TicTacToe playerTwo = new TicTacToe("O");
+
+TicTacToe.RunGame(playerOne, playerTwo);
 
 Console.ReadLine();
