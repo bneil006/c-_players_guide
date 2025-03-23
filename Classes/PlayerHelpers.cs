@@ -3,125 +3,125 @@ using System.Collections.Generic;
 
 namespace PlayerHelpers
 {
-    #region Robot Class
+    #region Robot Classes
 
     public class Robot
     {
         public int X { get; set; }
         public int Y { get; set; }
         public bool IsPowered { get; set; }
-        public List<RobotCommand> Commands { get; } = new List<RobotCommand>();
+        public List<RobotCommandBase> Commands { get; } = new List<RobotCommandBase>();
         
         public void Run()
         {
-            foreach (RobotCommand command in Commands)
+            foreach (RobotCommandBase command in Commands)
             {
-                command?.Run(this);
-                Console.WriteLine($"{X}, {Y}, {IsPowered}");
+                command.Run(this);
+                Console.WriteLine($"X: {X}, Y: {Y}, IsPowered: {IsPowered}");
             }
         }
 
-        public void AddCommands(params List<RobotCommand> commands)
+        public void AddCommands(params List<RobotCommandBase> commands)
         {
-            foreach (RobotCommand command in commands)
+            foreach (RobotCommandBase command in commands)
             {
                 Commands.Add(command);
             }
         }
+        
     }
 
-    public abstract class RobotCommand
+    public abstract class RobotCommandBase
     {
         public abstract void Run(Robot robot);
-        public void NotPowered()
+        public virtual void UnPowered()
         {
-            Console.WriteLine("Robot is not powered.");
+            Console.WriteLine("Action can't be performed, Robot is powered off.");
+
         }
     }
 
-    public class OnCommand : RobotCommand
+    public class PowerOn : RobotCommandBase
     {
         public override void Run(Robot robot)
         {
-            Console.WriteLine("Powered On");
             robot.IsPowered = true;
         }
     }
 
-    public class OffCommand : RobotCommand
+    public class PowerOff : RobotCommandBase
     {
         public override void Run(Robot robot)
         {
-            Console.WriteLine("Powered Off");
             robot.IsPowered = false;
         }
     }
 
-    public class NorthCommand : RobotCommand
+    public class MoveNorth : RobotCommandBase
     {
         public override void Run(Robot robot)
         {
             if (robot.IsPowered)
             {
-                Console.WriteLine("Moved North");
                 robot.Y += 1;
             }
             else
             {
-                NotPowered();
+                UnPowered();
             }
+        }
+
+        public override void UnPowered()
+        {
+            Console.WriteLine("Can't move North, Robot is powered off.");
         }
     }
 
-    public class SouthCommand : RobotCommand
+    public class MoveSouth : RobotCommandBase
     {
         public override void Run(Robot robot)
         {
             if (robot.IsPowered)
             {
-                Console.WriteLine("Moved South");
                 robot.Y -= 1;
             }
             else
             {
-                NotPowered();
+                UnPowered();
             }
         }
     }
 
-    public class WestCommand : RobotCommand
+    public class MoveWest : RobotCommandBase
     {
         public override void Run(Robot robot)
         {
             if (robot.IsPowered)
             {
-                Console.WriteLine("Moved West");
                 robot.X += 1;
             }
             else
             {
-                NotPowered();
+                UnPowered();
             }
         }
     }
 
-    public class EastCommand : RobotCommand
+    public class MoveEast : RobotCommandBase
     {
         public override void Run(Robot robot)
         {
             if (robot.IsPowered)
             {
-                Console.WriteLine("Moved East");
                 robot.X -= 1;
             }
             else
             {
-                NotPowered();
+                UnPowered();
             }
         }
     }
 
-    
 
     #endregion
 
