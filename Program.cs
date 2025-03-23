@@ -1,15 +1,20 @@
 ﻿using System;
 using PlayerHelpers;
 
-Pack firstPack = new Pack(10, 8, 4);
-Console.WriteLine($"Pack Attributes | Item Limit: {firstPack.BagItemCapacity}, Weight: {firstPack.BagWeightCapacity}, Volume: {firstPack.BagVolumeCapacity}");
+Robot myRobot = new Robot();
 
-SwordItem sword = new SwordItem();
-Console.WriteLine($"Sword Weight: {sword.ItemWeight}, Sword Volume: {sword.ItemVolume}");
+myRobot.Commands.Add(new OnCommand());
+myRobot.Commands.Add(new NorthCommand());
+myRobot.Commands.Add(new SouthCommand());
+myRobot.Commands.Add(new WestCommand());
+myRobot.Commands.Add(new EastCommand());
+myRobot.Commands.Add(new OffCommand());
 
-firstPack.PackItem(sword);
-firstPack.PackItem(new ArrowItem());
+myRobot.Run();
+Console.WriteLine();
 
-firstPack.PackItems(new ArrowItem(), new ArrowItem(), new ArrowItem(), new SwordItem());
+Robot mySecondRobot = new Robot();
+mySecondRobot.AddCommands(new OnCommand(), new NorthCommand(), new SouthCommand(), new WestCommand(), new EastCommand(), new OffCommand());
+mySecondRobot.Run();
 
 Console.ReadLine();

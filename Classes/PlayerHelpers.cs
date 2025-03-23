@@ -3,13 +3,136 @@ using System.Collections.Generic;
 
 namespace PlayerHelpers
 {
-    #region Packing Inventory Challenge
+    #region Robot Class
+
+    public class Robot
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+        public bool IsPowered { get; set; }
+        public List<RobotCommand> Commands { get; } = new List<RobotCommand>();
+        
+        public void Run()
+        {
+            foreach (RobotCommand command in Commands)
+            {
+                command?.Run(this);
+                Console.WriteLine($"{X}, {Y}, {IsPowered}");
+            }
+        }
+
+        public void AddCommands(params List<RobotCommand> commands)
+        {
+            foreach (RobotCommand command in commands)
+            {
+                Commands.Add(command);
+            }
+        }
+    }
+
+    public abstract class RobotCommand
+    {
+        public abstract void Run(Robot robot);
+        public void NotPowered()
+        {
+            Console.WriteLine("Robot is not powered.");
+        }
+    }
+
+    public class OnCommand : RobotCommand
+    {
+        public override void Run(Robot robot)
+        {
+            Console.WriteLine("Powered On");
+            robot.IsPowered = true;
+        }
+    }
+
+    public class OffCommand : RobotCommand
+    {
+        public override void Run(Robot robot)
+        {
+            Console.WriteLine("Powered Off");
+            robot.IsPowered = false;
+        }
+    }
+
+    public class NorthCommand : RobotCommand
+    {
+        public override void Run(Robot robot)
+        {
+            if (robot.IsPowered)
+            {
+                Console.WriteLine("Moved North");
+                robot.Y += 1;
+            }
+            else
+            {
+                NotPowered();
+            }
+        }
+    }
+
+    public class SouthCommand : RobotCommand
+    {
+        public override void Run(Robot robot)
+        {
+            if (robot.IsPowered)
+            {
+                Console.WriteLine("Moved South");
+                robot.Y -= 1;
+            }
+            else
+            {
+                NotPowered();
+            }
+        }
+    }
+
+    public class WestCommand : RobotCommand
+    {
+        public override void Run(Robot robot)
+        {
+            if (robot.IsPowered)
+            {
+                Console.WriteLine("Moved West");
+                robot.X += 1;
+            }
+            else
+            {
+                NotPowered();
+            }
+        }
+    }
+
+    public class EastCommand : RobotCommand
+    {
+        public override void Run(Robot robot)
+        {
+            if (robot.IsPowered)
+            {
+                Console.WriteLine("Moved East");
+                robot.X -= 1;
+            }
+            else
+            {
+                NotPowered();
+            }
+        }
+    }
+
+    
+
+    #endregion
+
+    #region Packing & Labeling Inventory Challenge
     public class Pack
     {
         #region Base Class Properties
         public int BagItemCapacity { get; protected set; }
         public float BagWeightCapacity { get; protected set; }
         public float BagVolumeCapacity { get; protected set; }
+        public List<InventoryItem> PackInventoryList { get; protected set; }
 
         #endregion
         public Pack(int itemCapacity, int weightCapacity, int volumeCapacity)
@@ -17,6 +140,21 @@ namespace PlayerHelpers
             BagItemCapacity = itemCapacity;
             BagWeightCapacity = weightCapacity;
             BagVolumeCapacity = volumeCapacity;
+            PackInventoryList = new List<InventoryItem>();
+        }
+        public override string ToString()
+        {
+            string itemList = string.Empty;
+
+            for (int i = 1; i < PackInventoryList.Count; i++)
+            {
+                itemList += $"{i}: {PackInventoryList[i].ToString()} ";
+            }
+            if (itemList == string.Empty)
+            {
+                itemList = "Pack is empty";
+            }
+            return itemList;
         }
 
         public bool PackItem(InventoryItem item)
@@ -41,7 +179,12 @@ namespace PlayerHelpers
                 BagItemCapacity -= 1;
                 BagWeightCapacity -= item.ItemWeight;
                 BagVolumeCapacity -= item.ItemVolume;
+
+                Console.WriteLine();
+                Console.WriteLine($"Item Added: {item.ToString()}");
+                PackInventoryList.Add(item);
                 PackStatus();
+
                 return true;
             }
         }
@@ -61,17 +204,23 @@ namespace PlayerHelpers
 
         public void PackStatus()
         {
-            Console.WriteLine($"PACK STATUS | Item Capacity Left: {BagItemCapacity}, Weight Capacity Left: {BagWeightCapacity}, Volume Capacity Left: {BagVolumeCapacity}");
+            Console.WriteLine($"PACK STATUS | Item Capacity Left: {BagItemCapacity}, Weight Capacity Left: {BagWeightCapacity:.##}, Volume Capacity Left: {BagVolumeCapacity:.##}");
         }
     }
 
-    public class InventoryItem
+    public abstract class InventoryItem
     {
+        public string ItemName {  get; set; }
         public float ItemWeight { get; set; }
         public float ItemVolume { get; set; }
         public InventoryItem()
         {
 
+        }
+
+        public override string ToString()
+        {
+            return $"{ItemName}";
         }
     }
 
@@ -79,6 +228,7 @@ namespace PlayerHelpers
     {
         public ArrowItem()
         {
+            ItemName = "Arrow";
             ItemWeight = 0.1f;
             ItemVolume = 0.05f;
         }
@@ -88,6 +238,7 @@ namespace PlayerHelpers
     {
         public BowItem()
         {
+            ItemName = "Bow";
             ItemWeight = 1.0f;
             ItemVolume = 4.0f;
         }
@@ -97,6 +248,7 @@ namespace PlayerHelpers
     {
         public RopeItem()
         {
+            ItemName = "Rope";
             ItemWeight = 1.0f;
             ItemVolume = 1.5f;
         }
@@ -106,6 +258,7 @@ namespace PlayerHelpers
     {
         public WaterItem()
         {
+            ItemName = "Water";
             ItemWeight = 2.0f;
             ItemVolume = 3.0f;
         }
@@ -113,8 +266,9 @@ namespace PlayerHelpers
 
     public class FoodRationItem : InventoryItem
     {
-        FoodRationItem()
+        public FoodRationItem()
         {
+            ItemName = "Food Ration";
             ItemWeight = 1.0f;
             ItemVolume = 0.5f;
         }
@@ -124,6 +278,7 @@ namespace PlayerHelpers
     {
         public SwordItem()
         {
+            ItemName = "Sword";
             ItemWeight = 5.0f;
             ItemVolume = 3.0f;
         }
