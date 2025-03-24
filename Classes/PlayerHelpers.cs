@@ -3,6 +3,90 @@ using System.Collections.Generic;
 
 namespace PlayerHelpers
 {
+    #region Records & War Preparations Challenge
+    public record Sword
+    {
+        public GemstoneType GemstoneMaterial { get; init; }
+        public SwordType SwordMaterial { get; init; }
+        public int Length { get; init; }
+        public int Width { get; init; }
+
+        public Sword()
+        {
+
+        }
+        public Sword(GemstoneType gem, SwordType sword, int length, int width)
+        {
+            GemstoneMaterial = gem;
+            SwordMaterial = sword;
+            Length = length;
+            Width = width;
+        }
+    }
+
+    public enum GemstoneType
+    {
+        Emerald,
+        Amber,
+        Sapphire,
+        Diamond,
+        Bitstone
+    }
+
+    public enum SwordType
+    {
+        Wood,
+        Bronze,
+        Iron,
+        Steel,
+        Binarium
+    }
+    #endregion
+
+    #region Structs & Room Coordinates Challenge
+    public struct Vector3
+    {
+        public int X { get; init; }
+        public int Z { get; init; }
+        public int Y { get; init; }
+
+        public Vector3(int x, int z, int y)
+        {
+            X = x; 
+            Z = z;
+            Y = y; 
+        }
+    }
+
+    #region Example of Class and Struct interaction with assignments
+    //PairOfPair myPair = new PairOfPair();
+
+    //myPair.PairOne.X = 3;
+    //myPair.PairTwo.Y = 8;
+
+    //myPair.Display();
+    public class PairOfPair
+    {
+        public PairOfIntStruct PairOne;
+        public PairOfIntStruct PairTwo;
+
+        public void Display()
+        {
+            Console.WriteLine($"[Pair One] X: {PairOne.X}, Y: {PairOne.Y}");
+            Console.WriteLine($"[Pair Two] X: {PairTwo.X}, Y: {PairTwo.Y}");
+        }
+    }
+
+    public struct PairOfIntStruct
+    {
+        public int X;
+        public int Y;
+    }
+    #endregion
+
+
+    #endregion
+
     #region Robot Classes
 
     public class Robot

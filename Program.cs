@@ -1,12 +1,12 @@
 ﻿using System;
 using PlayerHelpers;
 
-Robot myRobot = new Robot();
-myRobot.AddCommands(new PowerOn(), new PowerOff(), new MoveNorth(), new MoveSouth(), new MoveWest(), new MoveEast(), new PowerOff());
+Sword firstSword = new Sword { GemstoneMaterial = GemstoneType.Sapphire, SwordMaterial = SwordType.Iron, Length = 32, Width = 4};
+Sword secondSword = firstSword with { GemstoneMaterial = GemstoneType.Amber , Length = 28, Width = 2};
+Sword thirdSword = new Sword(GemstoneType.Emerald, SwordType.Iron, 35, 3);
 
-myRobot.Run();
-foreach (RobotCommandBase command in myRobot.Commands)
-{
-    Console.WriteLine(command.ToString());
-}
+Console.WriteLine(firstSword.ToString());
+Console.WriteLine(secondSword.ToString());
+Console.WriteLine(thirdSword.ToString());
+
 Console.ReadLine();
