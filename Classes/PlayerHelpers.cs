@@ -3,6 +3,52 @@ using System.Collections.Generic;
 
 namespace PlayerHelpers
 {
+    #region The Fountain Of Objects
+
+    #endregion
+
+    #region Generics Challenge Level 30
+    public class Bow
+    {
+
+    }
+
+    public class Axe
+    {
+
+    }
+
+    public class Dagger
+    {
+
+    }
+
+    public class ColoredWeapon<T>where T : class
+    {
+
+        public WeaponColors Color { get; set; }
+        public ColoredWeapon(WeaponColors color)
+        {
+            Color = color;
+        }
+
+        public void DisplayWeapon()
+        {
+            Type baseClass = typeof(T);
+            string name = baseClass.Name;
+
+            Console.WriteLine($"{Color} {name}");
+        }
+    }
+
+    public enum WeaponColors
+    {
+        Blue,
+        Green,
+        Red
+    }
+    #endregion
+
     #region Records & War Preparations Challenge
     public record Sword
     {

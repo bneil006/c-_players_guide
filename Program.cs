@@ -1,12 +1,11 @@
-﻿using System;
-using PlayerHelpers;
+﻿using PlayerHelpers;
 
-Sword firstSword = new Sword { GemstoneMaterial = GemstoneType.Sapphire, SwordMaterial = SwordType.Iron, Length = 32, Width = 4};
-Sword secondSword = firstSword with { GemstoneMaterial = GemstoneType.Amber , Length = 28, Width = 2};
-Sword thirdSword = new Sword(GemstoneType.Emerald, SwordType.Iron, 35, 3);
+ColoredWeapon<Axe> newAxe = new ColoredWeapon<Axe>(WeaponColors.Red);
+ColoredWeapon<Bow> newBow = new ColoredWeapon<Bow>(WeaponColors.Green);
+ColoredWeapon<Dagger> newDagger = new ColoredWeapon<Dagger>(WeaponColors.Blue);
 
-Console.WriteLine(firstSword.ToString());
-Console.WriteLine(secondSword.ToString());
-Console.WriteLine(thirdSword.ToString());
+newAxe.DisplayWeapon();
+newBow.DisplayWeapon();
+newDagger.DisplayWeapon();
 
 Console.ReadLine();
