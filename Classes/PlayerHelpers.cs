@@ -1,397 +1,96 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace PlayerHelpers
 {
     #region The Fountain Of Objects
-    /*
-     * ___________________________________
-     * Create a Game class
-     * Game should be able to:
-     * 
-     * Prompt the Player
-     * Handle all game Logic / Classes together
-     * ___________________________________
-     * 
-     * ___________________________________
-     * Create a Player class
-     * Player should be able to:
-     * 
-     * Move UP, DOWN, RIGHT, LEFT
-     * Hear, Listen, See
-     * Interact with Objects
-     * Have a Bow and Shoot it to kill Amaroks
-     * Should be able to Ask for help from the PlayerHelp Class
-     * ___________________________________
-     * 
-     * ___________________________________
-     * Create a Dungeon class
-     * Dungeon should be able to:
-     * 
-     * Generate Dungeon Sized 4x4, 6x6 or 8x8 based on user choice
-     * Generate Pits based on Dungeon Size
-     * Generate Maelstroms based on Dungeon Size
-     * Generate Amaroks based on Dungeon Size
-     * ___________________________________
-     * 
-     * ___________________________________
-     * Create a Pit class
-     * Pits should be able to:
-     * 
-     * Be Sensed / Heard by the Player
-     * Kill and End the game if player ends their turn in a Pit Room
-     * ___________________________________
-     * 
-     * ___________________________________
-     * Create a Maelstrom class
-     * Maelstrom should be able to:
-     * 
-     * Be Sensed / Heard by the Player
-     * Move the Player if they enter a room with a Maelstrom
-     * Move the Maelstrom if a Player enters a room with it
-     * ___________________________________
-     * 
-     * ___________________________________
-     * Create a Amarok class
-     * Amarok should be able to:
-     * 
-     * Be Sensed / Smelled by the Player
-     * Kill and End the game if player enters a room with an Amarok
-     * Amarok should be able to die if shot by Player Bow / Arrow
-     * ___________________________________
-    */
 
+    #region DungeonGame Class
     public class DungeonGame
     {
-        private Dungeon dungeon = new Dungeon();
-        private Player player = new Player();
-
-        private Pit pit = new Pit();
-        private Maelstrom maelstrom = new Maelstrom();
-        private Amarok amarok = new Amarok();
-
-        public void RunGame()
+        Player Player { get; set; }
+        Dungeon Dungeon { get; set; }
+        public DungeonGame(Player player, Dungeon dungeon)
         {
-            
-            dungeon.GenerateDungeon(PromptUserForDungeonSize());
-
-            Console.WriteLine("You enter the Dungeon");
-            DisplayRowAndColumn(player);
-            Console.WriteLine($"You see light coming from the cavern enterance.");
-
-            Prompt(player);
-
-        }
-
-        private static string PromptUserForDungeonSize()
-        {
-            List<string> acceptable = new List<string>() { "Small", "Medium", "Large" };
-
-            string userResponse = String.Empty;
-            while (!acceptable.Contains(userResponse))
-            {
-                Console.Write("Dungeon Size [Small, Medium, Large]: ");
-                userResponse = Console.ReadLine();
-            }
-            return userResponse;
-        }
-
-        private static void DisplayRowAndColumn(Player player)
-        {
-            Console.WriteLine($"You are in the room at (Row={player.Row}, Column={player.Column})");
-        }
-
-        private static string Prompt(Player player)
-        {
-            Console.Write($"What do you want to do? ");
-            string userResponse = Console.ReadLine();
-
-            while (ValidUserResponse(player, userResponse, player.PlayerCommands) != true)
-            {
-                Console.Write($"What do you want to do? ");
-                userResponse = Console.ReadLine();
-            }
-            return userResponse;
-        }
-
-        private static bool ValidUserResponse(Player player, string response, Dictionary<string, PlayerCommands> validCommands)
-        {
-            if (validCommands.ContainsKey(response))
-            {
-                RunPlayerCommand(response, player);
-                DisplayRowAndColumn(player);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private static void RunPlayerCommand(string response, Player player)
-        {
-            player.PlayerCommands.TryGetValue(response, out PlayerCommands command);
-            command.Run(player);
-        }
-    }
-
-    public class Player
-    {
-        public Dictionary<string, PlayerCommands> PlayerCommands = new Dictionary<string, PlayerCommands>()
-            {
-                { "Move North", new MoveNorth() },
-                { "Move South", new MoveSouth() },
-                { "Move West", new MoveWest() },
-                { "Move East", new MoveEast() },
-                { "Listen", new Listen() },
-                { "Smell", new Smell() },
-                { "Shoot North", new ShootNorth() },
-                { "Shoot South", new ShootSouth() },
-                { "Shoot West", new ShootWest() },
-                { "Shoot East", new ShootEast() },
-                { "Turn On", new TurnOn() },
-                { "Turn Off", new TurnOff() },
-                { "Help", new PlayerHelp() },
-            };
-
-        public int Row { get; set; }
-        public int Column { get; set; }
-
-        public Player()
-        {
-            Row = 0;
-            Column = 0;
-        }
-    }
-
-    #region PlayerCommands and Children Classes
-    public class PlayerCommands
-    {
-        public virtual void Run(Player player)
-        {
-
-        }
-    }
-
-    internal class MoveNorth : PlayerCommands
-    {
-        public override void Run(Player player)
-        {
-            player.Row++;
-        }
-    }
-
-    internal class MoveSouth : PlayerCommands
-    {
-        public override void Run(Player player)
-        {
-            player.Row--;
-        }
-    }
-
-    internal class MoveWest : PlayerCommands
-    {
-        public override void Run(Player player)
-        {
-            player.Column++;
-        }
-    }
-
-    internal class MoveEast : PlayerCommands
-    {
-        public override void Run(Player player)
-        {
-            player.Column--;
-        }
-    }
-
-    internal class Listen : PlayerCommands
-    {
-        public override void Run(Player player)
-        {
-            
-        }
-    }
-
-    internal class Smell : PlayerCommands
-    {
-        public override void Run(Player player)
-        {
-            
-        }
-    }
-
-    internal class ShootNorth : PlayerCommands
-    {
-        public override void Run(Player player)
-        {
-            
-        }
-    }
-
-    internal class ShootSouth : PlayerCommands
-    {
-        public override void Run(Player player)
-        {
-
-        }
-    }
-
-    internal class ShootWest : PlayerCommands
-    {
-        public override void Run(Player player)
-        {
-
-        }
-    }
-
-    internal class ShootEast : PlayerCommands
-    {
-        public override void Run(Player player)
-        {
-
-        }
-    }
-
-    internal class TurnOn : PlayerCommands
-    {
-        public override void Run(Player player)
-        {
-            
-        }
-    }
-
-    internal class TurnOff : PlayerCommands
-    {
-        public override void Run(Player player)
-        {
-
-        }
-    }
-
-    internal class PlayerHelp : PlayerCommands
-    {
-        public override void Run(Player player)
-        {
-            
+            Player = player;
+            Dungeon = dungeon;
         }
     }
     #endregion
 
-    internal class Dungeon
+    #region Dungeon Class
+    public class Dungeon
     {
+        #region Properties
+        public string RoomSizeSelection
+        {
+            set 
+            {   
+                Dictionary<string, int[,]> validSizes = new Dictionary<string, int[,]>() 
+                {
+                    { "Small", new int[4, 4] },
+                    { "Medium", new int[6, 6] },
+                    { "Large", new int[8, 8] }
+                };
+
+                while (!validSizes.ContainsKey(value))
+                {
+                    Console.Write("Please enter a Dungeon Size [Small, Medium, Large]: ");
+                    value = Console.ReadLine();
+                }
+                
+                roomSize = validSizes[value];
+            }
+        }
+        #endregion
+
+        #region Fields
         private int[,] roomSize;
-        private Dictionary<(int, int), string> generatedRooms = new Dictionary<(int, int), string>();
+        private Dictionary<(int, int), string> dungeonRooms = new Dictionary<(int, int), string>();
+        #endregion
 
-        public void GenerateDungeon(string userSizeRequest)
+        #region Constructor
+        public Dungeon(string roomSizeRequest)
         {
-            if (userSizeRequest == "Small") { roomSize = new int[4, 4]; }
-            else if(userSizeRequest == "Medium") { roomSize = new int[6, 6]; }
-            else if(userSizeRequest == "Large") {roomSize = new int[8, 8]; }
-
-            GenerateRooms(userSizeRequest);   
+            RoomSizeSelection = roomSizeRequest;
         }
+        #endregion
 
-        private void GenerateRooms(string userSizeRequest)
+        #region Methods
+        public void SetDungeonRooms ()
         {
-            Random random = new Random();
-
-            int pitCount = 0;
-            int maelstromCount = 0;
-            int amarokCount = 0;
-
-            switch (userSizeRequest)
-            {
-                case "Small":
-                    pitCount = 1;
-                    maelstromCount = 1;
-                    amarokCount = 1;
-                    break;
-                case "Medium":
-                    pitCount = 2;
-                    maelstromCount = 2;
-                    amarokCount = 2;
-                    break;
-                case "Large":
-                    pitCount = 4;
-                    maelstromCount = 4;
-                    amarokCount = 4;
-                    break;
-            }
-
+            int rows = 0;
+            int columns = 0;
             for (int i = 0; i < roomSize.GetLength(0); i++)
-                {
-                    for (int j = 0; j < roomSize.GetLength(0); j++)
-                    {
-                        generatedRooms.Add((i, j), "Empty");
-                    }
-                }
-
-            void FillRooms(int danager, string name)
             {
-                while (danager > 0)
+                columns = 0;
+                for (int j = 0; j < roomSize.GetLength(1); j++)
                 {
-                    int randomNumber = random.Next(1, roomSize.Length);
-                    var selection = generatedRooms.ElementAt(randomNumber);
-                    if (generatedRooms[selection.Key] == "Empty")
-                    {
-                        generatedRooms[selection.Key] = name;
-                        danager--;
-                    }
+                    dungeonRooms.Add((rows, columns), "Empty");
+                    columns++;
                 }
-            }
-
-            FillRooms(pitCount, "Pit");
-            FillRooms(maelstromCount, "Maelstrom");
-            FillRooms(amarokCount, "Amarok");
-            FillRooms(1, "Fountain Of Objects");
-
-            GetGeneratedRooms();
-        }
-
-        public virtual void SenseDanger()
-        {
-            Console.WriteLine("Sonething Dangerous is about.");
-        }
-
-        public void GetRoomSize()
-        {
-            Console.WriteLine(roomSize.Length);
-        }
-
-        public void GetGeneratedRooms()
-        {
-            foreach (var rooms in generatedRooms)
-            {
-                Console.WriteLine(rooms);
+                rows++;
             }
         }
-    }
 
-    internal class Pit : Dungeon
-    {
-        public override void SenseDanger()
+        public void ShowDungeonRooms()
         {
-            Console.WriteLine("You sense a draft on the air from an nearby room. (Pit)");
+            foreach (var item in dungeonRooms)
+            {
+                Console.WriteLine(item);
+            }
         }
+        #endregion
     }
+    #endregion
 
-    internal class Maelstrom : Dungeon
+    #region Player Class
+    public class Player
     {
-        public override void SenseDanger()
-        {
-            Console.WriteLine("You hear a growling, groaning sound from an nearby room. (Maelstorm)");
-        }
-    }
 
-    internal class Amarok : Dungeon
-    {
-        public override void SenseDanger()
-        {
-            Console.WriteLine("You smell a rotting stench of an amarok in a nearby room. (Amarok)");
-        }
     }
+    #endregion
+
     #endregion
 
     #region Generics Challenge Level 30
