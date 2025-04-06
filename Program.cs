@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using PlayerHelpers;
 
-Player player = new Player("Brandon");
-Dungeon dungeon = new Dungeon("Small");
+Player player = new Player("Haley");
+Dungeon dungeon = new Dungeon("");
 DungeonGame game = new DungeonGame(player, dungeon);
 
 game.RunGame();

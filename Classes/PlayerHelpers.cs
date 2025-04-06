@@ -197,6 +197,7 @@ namespace PlayerHelpers
                     {
                         Console.WriteLine(command);
                     }
+                    Console.WriteLine();
                 }
             }
         }
@@ -254,11 +255,11 @@ namespace PlayerHelpers
                     else { Console.WriteLine("You can go no farther South."); }
                     break;
                 case "Move West":
-                    if (player.playerPosition.Column < max) { player.MoveWest(1); }
+                    if (player.playerPosition.Column > 0) { player.MoveWest(1); }
                     else { Console.WriteLine("You can go no farther West."); }
                     break;
                 case "Move East":
-                    if (player.playerPosition.Column > 0) { player.MoveEast(1); }
+                    if (player.playerPosition.Column < max) { player.MoveEast(1); }
                     else { Console.WriteLine("You can go no farther East."); }
                     break;
             }
@@ -271,8 +272,8 @@ namespace PlayerHelpers
 
             var northOfPlayer = (player.playerPosition.Row + 1, player.playerPosition.Column);
             var southOfPlayer = (player.playerPosition.Row - 1, player.playerPosition.Column);
-            var westOfPlayer = (player.playerPosition.Row, player.playerPosition.Column + 1);
-            var eastOfPlayer = (player.playerPosition.Row, player.playerPosition.Column - 1);
+            var westOfPlayer = (player.playerPosition.Row, player.playerPosition.Column - 1);
+            var eastOfPlayer = (player.playerPosition.Row, player.playerPosition.Column + 1);
 
             void CheckRooms((int, int) position, string direction)
             {
@@ -306,7 +307,7 @@ namespace PlayerHelpers
                     {
                         dungeon.bearRooms.Remove(southOfPlayer);
                         dungeon.dungeonRooms[southOfPlayer] = "Empty";
-                        Console.WriteLine($"You shot a bear in Room North of you.");
+                        Console.WriteLine($"You shot a bear in Room South of you.");
                     }
                     else
                     {
@@ -318,7 +319,7 @@ namespace PlayerHelpers
                     {
                         dungeon.bearRooms.Remove(westOfPlayer);
                         dungeon.dungeonRooms[westOfPlayer] = "Empty";
-                        Console.WriteLine($"You shot a bear in Room North of you.");
+                        Console.WriteLine($"You shot a bear in Room West of you.");
                     }
                     else
                     {
@@ -330,7 +331,7 @@ namespace PlayerHelpers
                     {
                         dungeon.bearRooms.Remove(eastOfPlayer);
                         dungeon.dungeonRooms[eastOfPlayer] = "Empty";
-                        Console.WriteLine($"You shot a bear in Room North of you.");
+                        Console.WriteLine($"You shot a bear in Room East of you.");
                     }
                     else
                     {
@@ -346,8 +347,8 @@ namespace PlayerHelpers
         {
             var northOfPlayer = (player.playerPosition.Row + 1, player.playerPosition.Column);
             var southOfPlayer = (player.playerPosition.Row - 1, player.playerPosition.Column);
-            var westOfPlayer = (player.playerPosition.Row, player.playerPosition.Column + 1);
-            var eastOfPlayer = (player.playerPosition.Row, player.playerPosition.Column - 1);
+            var westOfPlayer = (player.playerPosition.Row, player.playerPosition.Column - 1);
+            var eastOfPlayer = (player.playerPosition.Row, player.playerPosition.Column + 1);
 
             void CheckRooms((int, int) position, string direction)
             {
@@ -598,12 +599,12 @@ namespace PlayerHelpers
 
         public void MoveWest(int number)
         {
-            playerPosition.Column += number;
+            playerPosition.Column -= number;
         }
 
         public void MoveEast(int number)
         {
-            playerPosition.Column -= number;
+            playerPosition.Column += number;
         }
     }
     #endregion
