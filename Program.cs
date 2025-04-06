@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using PlayerHelpers;
 
-Dungeon dungeon = new Dungeon("Small");
+Dungeon dungeon = new Dungeon("Medium");
 
 dungeon.SetDungeonRooms();
 dungeon.ShowDungeonRooms();

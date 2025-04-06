@@ -59,6 +59,26 @@ namespace PlayerHelpers
         #region Methods
         public void SetDungeonRooms ()
         {
+            Random random = new Random();
+
+            List<string> AddDangers(int number)
+            {
+                List<string> dangerList = new List<string>();
+                for (int i = 0; i < number; i++)
+                {
+                    dangerList.Add("Pit");
+                    dangerList.Add("Storm");
+                    dangerList.Add("Bear");
+                }
+                return dangerList;
+            }
+
+            List<string> dangers = new List<string>();
+
+            if (roomSize.Length == 4*4) { dangers = AddDangers(1); }
+            else if (roomSize.Length == 6*6) { dangers = AddDangers(2); }
+            else if (roomSize.Length == 8*8) { dangers = AddDangers(4); }
+            
             int rows = 0;
             int columns = 0;
             for (int i = 0; i < roomSize.GetLength(0); i++)
@@ -70,6 +90,21 @@ namespace PlayerHelpers
                     columns++;
                 }
                 rows++;
+            }
+
+            while (dangers.Count > 0)
+            {
+                int randomDungeonNumber = random.Next(1, dungeonRooms.Count);
+                int dungeonChoice = randomDungeonNumber;
+
+                if (dungeonRooms.ElementAt(dungeonChoice).Value == "Empty")
+                {
+                    int randomDangerNumber = random.Next(0, dangers.Count);
+                    int dangerChoice = randomDangerNumber;
+
+                    dungeonRooms[dungeonRooms.ElementAt(dungeonChoice).Key] = dangers.ElementAt(dangerChoice);
+                    dangers.RemoveAt(dangerChoice);
+                }
             }
         }
 
