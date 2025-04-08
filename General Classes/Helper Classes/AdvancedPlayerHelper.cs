@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdvancedPlayerHelper
+namespace PlayerHelpers
 {
-    public static class MyAdancedHelper
+    public static class MyAdvancedHelper
     {
-        public static void MyNewPrint<T>(T itemToPrint)
+        public static void Print<T>(T itemToPrint)
         {
             Console.WriteLine(itemToPrint);
         }
