@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PlayerHelpers
+namespace PlayerHelper
 {
 
     #region Generics Challenge Level 30

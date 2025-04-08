@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using PlayerHelpers;
+using PlayerHelper;
 
 
 namespace Challenges // Challenges from C# Players Guide

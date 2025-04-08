@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace PlayerHelpers
+namespace DungeonGame
 {
-    public class DungeonGame
+    public class Game
     {
         public Player player {  get; set; }
         public Dungeon dungeon { get; set; }
         private int arrows = 5;
         private bool fountainOnBool = false;
         
-        public DungeonGame(Player player, Dungeon dungeon)
+        public Game(Player player, Dungeon dungeon)
         {
             this.player = player;
             this.dungeon = dungeon;
@@ -119,6 +119,7 @@ namespace PlayerHelpers
                 "Show Arrows",
                 "Show Position",
                 "Show Visited",
+                "Show Visited Sorted",
                 "Clear Screen"
             };
 
@@ -214,6 +215,9 @@ namespace PlayerHelpers
                     break;
                 case "Show Visited":
                     player.ShowVisitedRooms();
+                    break;
+                case "Show Visited Sorted":
+                    player.ShowVisitedSorted();
                     break;
                 case "Clear Screen":
                     Console.Clear();

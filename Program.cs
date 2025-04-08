@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using PlayerHelpers;
+using DungeonGame;
 
-
+Game game = new Game(new Player("Brandon"), new Dungeon(""));
+game.RunGame();
 
 Console.ReadLine();

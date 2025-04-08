@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Namespaces and Classes\PlayerHelper namespace\Advanced namespace\Classes\Larger Project Collection\" />
+  </ItemGroup>
+
 </Project>

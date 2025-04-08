@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayerHelpers
+namespace PlayerHelper.Advanced
 {
-    public static class MyAdvancedHelper
+    public static class AdvancedHelper
     {
         public static void Print<T>(T itemToPrint)
         {

@@ -1,4 +1,4 @@
-﻿namespace PlayerHelpers
+﻿namespace DungeonGame
 {
     public class Dungeon
     {

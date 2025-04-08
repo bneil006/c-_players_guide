@@ -1,4 +1,4 @@
-﻿namespace PlayerHelpers
+﻿namespace DungeonGame
 {
     public class Player
     {
@@ -70,6 +70,33 @@
                 Console.Write($"{room} ");
                 count++;
             }
+            Console.WriteLine();
+            Console.WriteLine("------------------------------");
+        }
+
+        public void ShowVisitedSorted()
+        {
+            var visitedRoomSorted = visitedRooms
+                .OrderBy(room => room.Row)
+                .ThenBy(room => room.Column)
+                .ToList();
+
+
+            Console.WriteLine("Visited Rooms Sorted");
+            Console.WriteLine("------------------------------");
+
+            int count = 0;
+            foreach (var room in visitedRoomSorted)
+            {
+                if (count == 5)
+                {
+                    Console.WriteLine();
+                    count = 0;
+                }
+                Console.Write($"{room} ");
+                count++;
+            }
+
             Console.WriteLine();
             Console.WriteLine("------------------------------");
         }
