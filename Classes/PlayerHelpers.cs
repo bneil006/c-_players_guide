@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 
 namespace PlayerHelpers
@@ -29,6 +30,9 @@ namespace PlayerHelpers
             //dungeon.ShowDangerRooms();
             //Console.WriteLine();
 
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             bool win = WinGame();
             while (player.playerAlive == true && win == false)
             {
@@ -37,6 +41,10 @@ namespace PlayerHelpers
                 PlayerEvent();
                 win = WinGame();    
             }
+
+            stopwatch.Stop();
+            Console.WriteLine($"Game finished in: {stopwatch.Elapsed.ToString(@"mm\:ss")}");
+
         }
 
         private void ShowPosition()
@@ -119,6 +127,7 @@ namespace PlayerHelpers
             {
                 "Show Arrows",
                 "Show Position",
+                "Show Visited",
                 "Clear Screen"
             };
 
@@ -211,6 +220,9 @@ namespace PlayerHelpers
                     break;
                 case "Show Position":
                     ShowPosition();
+                    break;
+                case "Show Visited":
+                    player.ShowVisitedRooms();
                     break;
                 case "Clear Screen":
                     Console.Clear();
@@ -578,6 +590,10 @@ namespace PlayerHelpers
         #region Fields
         public bool playerAlive = true;
         public (int Row, int Column) playerPosition;
+        private List<(int Row, int Column)> visitedRooms = new List<(int Row, int Column)>
+        {
+            (0, 0)
+        };
         #endregion
 
         public Player(string name)
@@ -590,21 +606,53 @@ namespace PlayerHelpers
         public void MoveNorth(int number)
         {
             playerPosition.Row += number;
+            AddToVisitedRooms(playerPosition);
         }
 
         public void MoveSouth(int number)
         {
             playerPosition.Row -= number;
+            AddToVisitedRooms(playerPosition);
         }
 
         public void MoveWest(int number)
         {
             playerPosition.Column -= number;
+            AddToVisitedRooms(playerPosition);
         }
 
         public void MoveEast(int number)
         {
             playerPosition.Column += number;
+            AddToVisitedRooms(playerPosition);
+        }
+
+        private void AddToVisitedRooms((int, int) position)
+        {
+            if (!visitedRooms.Contains(playerPosition))
+            {
+                visitedRooms.Add(playerPosition);
+            }
+        }
+
+        public void ShowVisitedRooms()
+        {
+            Console.WriteLine("Visited Rooms");
+            Console.WriteLine("------------------------------");
+
+            int count = 0;
+            foreach (var room in visitedRooms)
+            {
+                if (count == 5)
+                {
+                    Console.WriteLine();
+                    count = 0;
+                }
+                Console.Write($"{room} ");
+                count++;
+            }
+            Console.WriteLine();
+            Console.WriteLine("------------------------------");
         }
     }
     #endregion

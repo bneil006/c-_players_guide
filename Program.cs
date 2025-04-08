@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using PlayerHelpers;
+using AdvancedPlayerHelper;
 
-Player player = new Player("Haley");
-Dungeon dungeon = new Dungeon("");
-DungeonGame game = new DungeonGame(player, dungeon);
-
-game.RunGame();
+DungeonGame dungeonGame = new DungeonGame(new Player("Brandon"), new Dungeon(""));
+dungeonGame.RunGame();
 
 Console.ReadLine();
