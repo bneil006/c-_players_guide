@@ -1,13 +1,6 @@
-﻿using System;
-using iField;
-using McDonald;
+﻿using BetterClasses;
+using Challenges;
 
-Sheep sheep = new Sheep();
-Cow cow = new Cow();
-
-iField.Pig iPig = new iField.Pig();
-McDonald.Pig mcPig = new McDonald.Pig();
-
-Console.WriteLine($"{sheep.ToString()}, {cow.ToString()}, {iPig.ToString()}, {mcPig.ToString()}");
+AskForNumber.Run("15");
 
 Console.ReadLine();

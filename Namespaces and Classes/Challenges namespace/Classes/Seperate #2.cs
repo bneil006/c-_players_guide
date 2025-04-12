@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PlayerHelper
+namespace Challenges
 {
 
     #region Generics Challenge Level 30
@@ -1171,26 +1171,7 @@ namespace PlayerHelper
     #endregion
 
     #region General Enums
-    enum SpiceType
-    {
-        Spicy,
-        Salty,
-        Sweet
-    }
-    enum IngredientType
-    {
-        Mushroom,
-        Chicken,
-        Carrot,
-        Potatoe
-    }
-
-    enum FoodType
-    {
-        Soup,
-        Stew,
-        Gumbo
-    }
+    
 
     enum ChestStates // challenge on page 135 SimulaChest()
     {
