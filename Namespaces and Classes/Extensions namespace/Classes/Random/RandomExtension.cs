@@ -2,11 +2,11 @@
 {
     public static class RandomClassExtension
     {
-        public static void RandomDirection (this Random random)
+        public static string RandomDirection (this Random random) // challenge on page 278 of C# Players Guide
         {
             List<string> directions = new List<string> { "Up", "Down", "Left", "Right" };
-            int choice = random.Next(0, directions.Count);
-            Console.WriteLine(directions.ElementAt(choice));
+
+            return directions.ElementAt(random.Next(0, directions.Count));
         }
     }
 }
