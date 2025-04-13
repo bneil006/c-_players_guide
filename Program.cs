@@ -1,6 +1,8 @@
 ﻿using BetterClasses;
+using BetterClasses.StringExtensions;
 using Challenges;
 
-AskForNumber.Run("15");
+string message = "brandon";
+Console.WriteLine(message.Capitalize());
 
 Console.ReadLine();
