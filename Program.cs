@@ -1,8 +1,6 @@
-﻿using BetterClasses;
-using BetterClasses.StringExtensions;
-using Challenges;
+﻿using Extensions;
 
-string message = "brandon";
-Console.WriteLine(message.Capitalize());
+Random random = new Random();
+random.RandomDirection();
 
 Console.ReadLine();

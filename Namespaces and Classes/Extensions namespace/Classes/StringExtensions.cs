@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-
-namespace BetterClasses.StringExtensions
+﻿namespace Extensions
 {
     public static class StringExtensions
     {
