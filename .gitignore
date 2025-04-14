@@ -3,6 +3,10 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# Personal Files
+Namespaces and Classes/Files/
+
+
 # dotenv files
 .env
 
